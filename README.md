@@ -30,3 +30,12 @@ Wrangler needs Cloudflare credentials for the account that owns `padudata.com`
 ## Contact
 
 hello@padudata.com
+
+## Brand
+
+`brand/` holds the logo mark ("Unite": four systems around one golden record):
+
+- `padudata-mark.svg`: for light backgrounds
+- `padudata-mark-on-dark.svg`: for dark backgrounds
+- `padudata-mark-mono.svg`: single color (`currentColor`)
+- `padudata-avatar.svg` / `.png`: 400×400 avatar for GitHub and LinkedIn
