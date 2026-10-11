@@ -3,6 +3,22 @@
   "private": true,
   "version": "0.1.0",
   "devDependencies": {
+    "@types/node": "^22.15.30",
+    "@types/papaparse": "^5.3.16",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vitest": "^3.2.4",
     "wrangler": "^4.149.0"
+  },
+  "dependencies": {
+    "papaparse": "^5.5.3",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "test": "vitest run",
+    "deploy": "npm run build && wrangler deploy"
   }
 }

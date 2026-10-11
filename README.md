@@ -1,35 +1,51 @@
 # padudata.com
 
-Landing page for [Padu Data](https://padudata.com), master data governance for Indonesian enterprises running multiple ERPs.
+Website for [Padu Data](https://padudata.com), master data governance for Indonesian enterprises running multiple ERPs.
 
-A single static page served by Cloudflare Workers static assets.
+- `/`: landing page
+- `/health-check/`: **Vendor Master Health Check**, a free tool that checks vendor exports from one or more ERPs for NPWP/NIK/NITKU format problems, duplicates, cross-ERP inconsistencies and shared bank accounts. It runs entirely in the browser; no data is uploaded. `/health-check/#demo` opens it with fictional sample data.
+
+Built with Vite + TypeScript into static files, served by Cloudflare Workers static assets.
 
 ```
-public/
-├── index.html    # the page (HTML + inline CSS/JS, no build step)
-├── favicon.svg
-├── robots.txt
-└── sitemap.xml
-wrangler.jsonc    # Worker config: assets directory + custom domains
+site/
+├── index.html                 # landing page (HTML + inline CSS)
+├── health-check/index.html    # tool page shell
+├── public/                    # copied as-is: favicon, robots.txt, sitemap.xml
+└── src/
+    ├── lib/                   # framework-free logic, unit tested
+    │   ├── taxid.ts           # NPWP / NIK / NITKU format checks
+    │   ├── names.ts           # company name normalization, Jaro-Winkler
+    │   └── checks.ts          # all health checks over vendor records
+    └── health-check/          # UI: parsing, column mapping, i18n (ID/EN), rendering
+tests/                         # Vitest
+brand/                         # logo files
+wrangler.jsonc                 # Worker config: serves dist/, custom domains
 ```
 
 ## Develop
 
-Open `public/index.html` in a browser. There is no build step.
+```sh
+npm install
+npm run dev      # http://localhost:5173
+npm test
+```
 
 ## Deploy
 
 ```sh
-npm install
-npx wrangler deploy
+npm run deploy   # type-check, build to dist/, wrangler deploy
 ```
 
 Wrangler needs Cloudflare credentials for the account that owns `padudata.com`
 (`CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`, or `npx wrangler login`).
 
-## Contact
+## What the tax ID checks do and don't do
 
-hello@padudata.com
+Format and consistency only. Registration status with DJP is not checked. The
+check digit of 15-digit NPWPs is not verified, because DJP has not published the
+algorithm. NITKU is checked for length (22 digits) and for starting with the
+record's own 16-digit NPWP.
 
 ## Brand
 
@@ -39,3 +55,7 @@ hello@padudata.com
 - `padudata-mark-on-dark.svg`: for dark backgrounds
 - `padudata-mark-mono.svg`: single color (`currentColor`)
 - `padudata-avatar.svg` / `.png`: 400×400 avatar for GitHub and LinkedIn
+
+## Contact
+
+hello@padudata.com

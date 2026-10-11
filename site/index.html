@@ -297,7 +297,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <a class="hide-sm" href="#problem">Problem</a>
       <a class="hide-sm" href="#how">How it works</a>
       <a class="hide-sm" href="#reviewer">AI reviewer</a>
-      <a class="btn btn-ghost" href="#contact">Become a design partner</a>
+      <a href="/health-check/">Free health check</a>
+      <a class="btn btn-ghost hide-sm" href="#contact">Become a design partner</a>
     </nav>
   </div>
 </header>
@@ -311,7 +312,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         <p class="lede">Padu Data keeps your master data correct, consistent and Coretax-ready across D365, AX, Odoo and Epicor, with AI that reviews every change before it reaches your approvers.</p>
         <div class="actions">
           <a class="btn btn-primary" href="#contact">Talk to us</a>
-          <a class="btn btn-ghost" href="#how">See how it works</a>
+          <a class="btn btn-ghost" href="/health-check/">Run a free health check</a>
         </div>
         <div class="status-line"><span class="pulse" aria-hidden="true"></span>In development · Founded 2026 · Indonesia</div>
       </div>
@@ -459,6 +460,33 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
           <p class="powered">Powered by Claude</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="block" id="health-check">
+    <div class="wrap two">
+      <div class="section-head">
+        <div class="eyebrow">Free tool</div>
+        <h2>Check your vendor master today</h2>
+        <p>Upload vendor exports from one or more ERPs and see tax IDs that will fail in Coretax, duplicate vendors, records that differ between systems, and bank accounts shared by different vendors. It runs entirely in your browser, so your data never leaves your computer.</p>
+        <div class="actions" style="margin-top: 8px">
+          <a class="btn btn-primary" href="/health-check/">Open Vendor Master Health Check</a>
+        </div>
+      </div>
+      <ul class="checks">
+        <li>
+          <svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="2.5" y="3.5" width="13" height="11" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 7.5h7M5.5 10.5h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <div><b>NPWP, NIK and NITKU format</b><span>Legacy 15-digit NPWPs, placeholders, wrong lengths and NITKUs that don't match their NPWP.</span></div>
+        </li>
+        <li>
+          <svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="7.5" cy="7.5" r="5" stroke="currentColor" stroke-width="1.6"/><path d="M11.5 11.5l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <div><b>Duplicates and cross-ERP conflicts</b><span>The same vendor twice in one system, or with a different name or bank account in another.</span></div>
+        </li>
+        <li>
+          <svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 2.5l6.5 12h-13L9 2.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 7.5v3M9 12.6v.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <div><b>Shared bank accounts</b><span>One account used by vendors with different identities, a common payment fraud pattern.</span></div>
+        </li>
+      </ul>
     </div>
   </section>
 
