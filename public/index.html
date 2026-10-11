@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Padu Data keeps vendor and customer master data correct, consistent and Coretax-ready across D365, AX, Odoo and Epicor.">
+<title>Padu Data</title>
+<link rel="canonical" href="https://padudata.com/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Padu Data">
+<meta property="og:title" content="Padu Data">
+<meta property="og:description" content="Vendor and customer master data you can trust, in every ERP. Master data governance for Indonesian enterprises.">
+<meta property="og:url" content="https://padudata.com/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Padu Data",
+  "url": "https://padudata.com/",
+  "logo": "https://padudata.com/favicon.svg",
+  "email": "hello@padudata.com",
+  "foundingDate": "2026-10",
+  "description": "Master data governance for Indonesian enterprises running multiple ERPs.",
+  "areaServed": "ID",
+  "founder": {
+    "@type": "Person",
+    "name": "Ferry Iswono",
+    "jobTitle": "Founder"
+  }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: dark-first, left-aligned technical page; hero pairs the thesis with a live sample of three ERP records merging into one golden record. */
+:root {
+  --bg: #0A0C11;
+  --surface: #10131A;
+  --surface-2: #151924;
+  --line: #1E2330;
+  --line-strong: #2A3142;
+  --fg: #E7E9EF;
+  --muted: #8B92A5;
+  --faint: #5E6578;
+  --accent: #8090FF;
+  --accent-soft: rgba(128, 144, 255, .12);
+  --warn: #E9A84E;
+  --warn-soft: rgba(233, 168, 78, .12);
+  --ok: #52C08E;
+  --ok-soft: rgba(82, 192, 142, .12);
+  --font-display: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #F6F7F9; --surface: #FFFFFF; --surface-2: #F0F2F6; --line: #E2E5EC; --line-strong: #CDD2DC;
+    --fg: #0E1118; --muted: #555D70; --faint: #8A91A2;
+    --accent: #4152DB; --accent-soft: rgba(65, 82, 219, .08);
+    --warn: #A8630F; --warn-soft: rgba(168, 99, 15, .09);
+    --ok: #1C8656; --ok-soft: rgba(28, 134, 86, .09);
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #F6F7F9; --surface: #FFFFFF; --surface-2: #F0F2F6; --line: #E2E5EC; --line-strong: #CDD2DC;
+  --fg: #0E1118; --muted: #555D70; --faint: #8A91A2;
+  --accent: #4152DB; --accent-soft: rgba(65, 82, 219, .08);
+  --warn: #A8630F; --warn-soft: rgba(168, 99, 15, .09);
+  --ok: #1C8656; --ok-soft: rgba(28, 134, 86, .09);
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 24px; }
+@media (max-width: 480px) { .wrap { padding-inline: 16px; } }
+
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; letter-spacing: -0.02em; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.mono { font-family: var(--font-mono); }
+
+/* Nav */
+.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--font-display); font-weight: 600; font-size: 17px; letter-spacing: -0.01em; }
+.brand svg { width: 26px; height: 26px; flex: none; }
+.nav-links { display: flex; align-items: center; gap: 24px; font-size: 14px; color: var(--muted); }
+.nav-links a { text-decoration: none; }
+.nav-links a:hover { color: var(--fg); }
+@media (max-width: 720px) { .nav-links .hide-sm { display: none; } }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: 500 14px/1 var(--font-body);
+  padding: 11px 16px; border-radius: 8px;
+  text-decoration: none; cursor: pointer; border: 1px solid transparent;
+  transition: background .15s, border-color .15s;
+}
+.btn-primary { background: var(--fg); color: var(--bg); }
+.btn-primary:hover { background: color-mix(in srgb, var(--fg) 86%, var(--accent)); }
+.btn-ghost { border-color: var(--line-strong); color: var(--fg); background: transparent; }
+.btn-ghost:hover { border-color: var(--muted); }
+.nav .btn { padding: 8px 12px; font-size: 13px; }
+
+/* Hero */
+.hero { padding-block: 88px 72px; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); gap: 56px; align-items: center; }
+@media (max-width: 960px) { .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 48px; } .hero { padding-block: 56px 48px; } }
+.hero h1 { font-size: clamp(36px, 5.2vw, 58px); line-height: 1.04; font-weight: 600; margin-top: 18px; }
+.hero h1 em { font-style: normal; color: var(--muted); }
+.hero .lede { margin-top: 22px; font-size: 18px; color: var(--muted); max-width: 34em; }
+.hero .actions { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px; }
+.status-line { margin-top: 28px; display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--faint); font-family: var(--font-mono); }
+.pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--warn); box-shadow: 0 0 0 0 var(--warn-soft); animation: pulse 2.4s infinite; flex: none; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 var(--warn-soft); } 70% { box-shadow: 0 0 0 8px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+
+/* Merge console */
+.console {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px -40px rgba(0, 0, 0, .55);
+}
+.console-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px 16px; border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono); font-size: 12px; color: var(--muted);
+}
+.console-head .tag { color: var(--faint); border: 1px solid var(--line-strong); border-radius: 4px; padding: 2px 6px; font-size: 11px; }
+.rec-list { display: grid; }
+.rec {
+  display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 4px 14px;
+  padding: 12px 16px; border-bottom: 1px solid var(--line);
+  font-size: 13px;
+  animation: settle .5s ease both;
+}
+.rec:nth-child(2) { animation-delay: .08s; }
+.rec:nth-child(3) { animation-delay: .16s; }
+@keyframes settle { from { transform: translateX(-6px); } to { transform: none; } }
+.sys { font-family: var(--font-mono); font-size: 11px; color: var(--faint); padding-top: 2px; grid-row: span 2; }
+.rec .name { font-weight: 500; min-width: 0; }
+.rec .meta { display: flex; flex-wrap: wrap; gap: 4px 14px; font-family: var(--font-mono); font-size: 12px; color: var(--muted); min-width: 0; }
+.rec .meta span { overflow-wrap: anywhere; }
+.flag { color: var(--warn); }
+.diff { background: var(--warn-soft); color: var(--warn); border-radius: 3px; padding: 0 3px; }
+.merge-rule {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px; font-family: var(--font-mono); font-size: 11px; color: var(--accent);
+  border-bottom: 1px solid var(--line);
+  background: var(--accent-soft);
+}
+.merge-rule svg { width: 14px; height: 14px; flex: none; }
+.golden { padding: 16px; display: grid; gap: 10px; border-bottom: 1px solid var(--line); }
+.golden-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.golden .name { font-family: var(--font-display); font-weight: 600; font-size: 16px; }
+.pill { font-family: var(--font-mono); font-size: 11px; border-radius: 999px; padding: 2px 8px; border: 1px solid currentColor; white-space: nowrap; }
+.pill.ok { color: var(--ok); background: var(--ok-soft); border-color: transparent; }
+.pill.warn { color: var(--warn); background: var(--warn-soft); border-color: transparent; }
+.kv { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 4px 12px; font-family: var(--font-mono); font-size: 12px; }
+.kv dt { color: var(--faint); }
+.kv dd { margin: 0; color: var(--fg); overflow-wrap: anywhere; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.review { padding: 14px 16px 16px; display: grid; gap: 12px; }
+.review-head { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: .06em; }
+.review p { font-size: 13px; color: var(--muted); }
+.review p b { color: var(--fg); font-weight: 500; }
+.review-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.review-actions .btn { padding: 8px 12px; font-size: 13px; }
+.review-actions .who { margin-left: auto; font-size: 12px; color: var(--faint); font-family: var(--font-mono); }
+.review-actions .who.done { color: var(--ok); }
+@media (max-width: 480px) { .rec { grid-template-columns: minmax(0, 1fr); } .sys { grid-row: auto; } .review-actions .who { margin-left: 0; width: 100%; } }
+
+/* Sections */
+section.block { padding-block: 88px; border-top: 1px solid var(--line); }
+@media (max-width: 720px) { section.block { padding-block: 64px; } }
+.section-head { display: grid; gap: 14px; max-width: 680px; }
+.section-head h2 { font-size: clamp(28px, 3.6vw, 40px); line-height: 1.1; font-weight: 600; }
+.section-head p { color: var(--muted); font-size: 17px; }
+
+/* Problem table */
+.table-scroll { margin-top: 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 640px; }
+th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--faint); text-transform: uppercase; letter-spacing: .06em; }
+tr:last-child td { border-bottom: 0; }
+td.mono { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.caption { margin-top: 14px; font-size: 13px; color: var(--faint); max-width: 680px; }
+
+/* Steps */
+.steps { margin-top: 48px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+@media (max-width: 860px) { .steps { grid-template-columns: minmax(0, 1fr); } }
+.step { padding: 28px 24px 32px; display: grid; gap: 12px; align-content: start; background: var(--surface); }
+.step + .step { border-left: 1px solid var(--line); }
+@media (max-width: 860px) { .step + .step { border-left: 0; border-top: 1px solid var(--line); } }
+.step .num { font-family: var(--font-mono); font-size: 12px; color: var(--faint); }
+.step h3 { font-size: 20px; font-weight: 600; }
+.step p { color: var(--muted); font-size: 15px; }
+
+/* AI reviewer */
+.reviewer-grid { margin-top: 48px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: start; }
+@media (max-width: 860px) { .reviewer-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; } }
+.checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--line); }
+.checks li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 12px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.checks svg { width: 18px; height: 18px; margin-top: 3px; color: var(--accent); }
+.checks b { font-weight: 600; display: block; }
+.checks span { color: var(--muted); font-size: 15px; }
+.control {
+  border: 1px solid var(--line); border-radius: 12px; padding: 24px; background: var(--surface);
+  display: grid; gap: 14px;
+}
+.control h3 { font-size: 20px; font-weight: 600; }
+.control p { color: var(--muted); font-size: 15px; }
+.log { font-family: var(--font-mono); font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; display: grid; gap: 6px; }
+.log div { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 10px; }
+.log time { color: var(--faint); font-variant-numeric: tabular-nums; }
+.next { font-size: 13px; color: var(--faint); }
+.next b { color: var(--accent); font-weight: 500; }
+.powered { font-family: var(--font-mono); font-size: 12px; color: var(--faint); }
+
+/* Connectors */
+.connectors { margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.conn { background: var(--surface); padding: 20px; display: grid; gap: 6px; }
+.conn b { font-family: var(--font-display); font-weight: 600; font-size: 16px; }
+.conn span { font-size: 13px; color: var(--muted); }
+.conn .pill { justify-self: start; color: var(--faint); margin-top: 6px; }
+
+/* Data + status */
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; }
+@media (max-width: 860px) { .two { grid-template-columns: minmax(0, 1fr); gap: 56px; } }
+.two .section-head h2 { font-size: clamp(24px, 3vw, 32px); }
+.founder { margin-top: 24px; display: flex; gap: 14px; align-items: center; }
+.avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--surface-2); border: 1px solid var(--line-strong); display: grid; place-items: center; font-family: var(--font-display); font-weight: 600; color: var(--muted); flex: none; }
+.founder b { display: block; font-weight: 600; }
+.founder span { font-size: 14px; color: var(--muted); }
+
+/* CTA */
+.cta { padding-block: 96px; border-top: 1px solid var(--line); }
+.cta-box { display: grid; gap: 20px; max-width: 720px; }
+.cta h2 { font-size: clamp(30px, 4.4vw, 48px); line-height: 1.06; font-weight: 600; }
+.cta p { color: var(--muted); font-size: 17px; }
+.email-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.email { font-family: var(--font-mono); font-size: 15px; padding: 10px 14px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--surface); user-select: all; }
+.copied { font-family: var(--font-mono); font-size: 12px; color: var(--ok); }
+
+footer { border-top: 1px solid var(--line); padding-block: 28px; font-size: 13px; color: var(--faint); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Padu Data home">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M4 7.5h7.5c3 0 4.5 1.6 6 4.6l1.4 2.8" stroke="var(--muted)" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M4 16h14" stroke="var(--muted)" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M4 24.5h7.5c3 0 4.5-1.6 6-4.6l1.4-2.8" stroke="var(--muted)" stroke-width="2.2" stroke-linecap="round"/>
+        <rect x="19.5" y="10" width="9" height="12" rx="2.2" fill="var(--accent)"/>
+      </svg>
+      Padu Data
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a class="hide-sm" href="#problem">Problem</a>
+      <a class="hide-sm" href="#how">How it works</a>
+      <a class="hide-sm" href="#reviewer">AI reviewer</a>
+      <a class="btn btn-ghost" href="#contact">Become a design partner</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Master data governance for Indonesian enterprises</div>
+        <h1>Vendor and customer data you can trust. <em>In every ERP.</em></h1>
+        <p class="lede">Padu Data keeps your master data correct, consistent and Coretax-ready across D365, AX, Odoo and Epicor, with AI that reviews every change before it reaches your approvers.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#contact">Talk to us</a>
+          <a class="btn btn-ghost" href="#how">See how it works</a>
+        </div>
+        <div class="status-line"><span class="pulse" aria-hidden="true"></span>In development · Founded 2026 · Indonesia</div>
+      </div>
+
+      <div class="console" aria-label="Sample: three vendor records merged into one golden record">
+        <div class="console-head">
+          <span>vendor · change request #1042</span>
+          <span class="tag">Sample data</span>
+        </div>
+        <div class="rec-list">
+          <div class="rec">
+            <div class="sys">D365 F&amp;O</div>
+            <div class="name">PT Sinar Logam Abadi</div>
+            <div class="meta"><span>NPWP 0012345678901000</span><span>BCA ···4410</span></div>
+          </div>
+          <div class="rec">
+            <div class="sys">AX 2012</div>
+            <div class="name">Sinar Logam Abadi, PT</div>
+            <div class="meta"><span class="flag">NPWP 01.234.567.8-901.000 · 15-digit</span><span>BCA ···4410</span></div>
+          </div>
+          <div class="rec">
+            <div class="sys">Odoo</div>
+            <div class="name">PT. Sinar Logam Abdi</div>
+            <div class="meta"><span>NPWP 0012345678901000</span><span><span class="diff">Mandiri ···2208</span> · changed 2d ago</span></div>
+          </div>
+        </div>
+        <div class="merge-rule">
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 3h4l3 5-3 5H2M9 8h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          3 records → 1 golden record
+        </div>
+        <div class="golden">
+          <div class="golden-top">
+            <span class="name">PT Sinar Logam Abadi</span>
+            <span class="pill warn">Needs approval</span>
+          </div>
+          <dl class="kv">
+            <dt>NPWP</dt><dd>0012345678901000 <span class="pill ok">Valid</span></dd>
+            <dt>NITKU</dt><dd>0012345678901000000000</dd>
+            <dt>Bank</dt><dd>BCA ···4410 <span class="pill warn">Conflict</span></dd>
+          </dl>
+        </div>
+        <div class="review">
+          <div class="review-head">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5l1.6 4.2 4.4.3-3.4 2.8 1.1 4.3L8 10.7l-3.7 2.4 1.1-4.3L2 6l4.4-.3L8 1.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+            AI reviewer
+          </div>
+          <p><b>Recommend merge.</b> Same NPWP across all three systems and 96% name similarity. AX still holds the legacy 15-digit NPWP. <b>Hold the bank change:</b> Odoo's account differs from the other two and was edited 2 days ago.</p>
+          <div class="review-actions">
+            <button class="btn btn-primary" type="button" id="approve-btn">Approve merge</button>
+            <button class="btn btn-ghost" type="button" id="reject-btn">Send back</button>
+            <span class="who" id="who" aria-live="polite">Approver: Finance · Vendor master</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="problem">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">The problem</div>
+        <h2>One vendor. Five records. One rejected invoice.</h2>
+        <p>The same vendor lives in three ERPs with three spellings and two tax ID formats. A bank account changes in one system and not the others. Since Coretax, a mismatched NPWP or NITKU means invoices that fail validation and input VAT you can't credit.</p>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>System</th><th>Vendor name</th><th>Tax ID</th><th>Bank account</th><th>Last edited by</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>D365 F&amp;O</td><td>PT Sinar Logam Abadi</td><td class="mono">0012345678901000</td><td class="mono">BCA ···4410</td><td class="mono">procurement</td></tr>
+            <tr><td>AX 2012</td><td>Sinar Logam Abadi, PT</td><td class="mono">01.234.567.8-901.000</td><td class="mono">BCA ···4410</td><td class="mono">finance</td></tr>
+            <tr><td>Odoo</td><td>PT. Sinar Logam Abdi</td><td class="mono">0012345678901000</td><td class="mono">Mandiri ···2208</td><td class="mono">branch admin</td></tr>
+            <tr><td>Spreadsheet</td><td>SINAR LOGAM</td><td class="mono">(empty)</td><td class="mono">BCA ···4410</td><td class="mono">AP team</td></tr>
+            <tr><td>Expense app</td><td>Sinar Logam Abadi</td><td class="mono">012345678901000</td><td class="mono">(empty)</td><td class="mono">employee</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="caption">Sample data. The pattern is real: we see it in almost every company running more than one system.</p>
+    </div>
+  </section>
+
+  <section class="block" id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">How it works</div>
+        <h2>From scattered records to one source of truth</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="num">Step 1</span>
+          <h3>Detect</h3>
+          <p>Connect your ERPs and see every duplicate, conflict and invalid tax ID across systems in one place.</p>
+        </div>
+        <div class="step">
+          <span class="num">Step 2</span>
+          <h3>Review</h3>
+          <p>Every new or changed vendor and customer record is checked by an AI reviewer before it reaches a person.</p>
+        </div>
+        <div class="step">
+          <span class="num">Step 3</span>
+          <h3>Approve and sync</h3>
+          <p>Your approver decides in one click. The approved record is written back to every connected ERP.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="reviewer">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">AI reviewer</div>
+        <h2>Your approvers get a recommendation, not a pile of paperwork</h2>
+        <p>Master data requests usually wait days for someone to check them by hand. The AI reviewer does the checking in seconds, so approvers only make the decision.</p>
+      </div>
+      <div class="reviewer-grid">
+        <ul class="checks">
+          <li>
+            <svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="7.5" cy="7.5" r="5" stroke="currentColor" stroke-width="1.6"/><path d="M11.5 11.5l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <div><b>Finds duplicates across systems</b><span>Matches names, tax IDs and addresses across every connected ERP, even with different spellings.</span></div>
+          </li>
+          <li>
+            <svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="2.5" y="3.5" width="13" height="11" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 7.5h7M5.5 10.5h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <div><b>Checks tax identity</b><span>NPWP and NITKU format and consistency, including records still on the legacy 15-digit NPWP.</span></div>
+          </li>
+          <li>
+            <svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 2.5l6.5 12h-13L9 2.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 7.5v3M9 12.6v.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <div><b>Flags risky changes</b><span>A vendor's bank account changing in one system is exactly what fraud looks like. It never slips through quietly.</span></div>
+          </li>
+          <li>
+            <svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 4.5h12M3 9h12M3 13.5h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <div><b>Explains its recommendation</b><span>Every recommendation comes with its reasoning, so approvers can check it in seconds.</span></div>
+          </li>
+        </ul>
+        <div class="control">
+          <h3>People make every decision</h3>
+          <p>The AI reviewer recommends. A person approves. Nothing is written to your ERPs without a human decision, and every step is logged for audit.</p>
+          <div class="log" aria-label="Sample audit log">
+            <div><time>09:14</time><span>Change request #1042 submitted by procurement</span></div>
+            <div><time>09:14</time><span>AI reviewer: merge recommended, bank change held</span></div>
+            <div><time>09:31</time><span>Approved by Finance · Vendor master</span></div>
+            <div><time>09:31</time><span>Synced to D365 F&amp;O, AX 2012, Odoo</span></div>
+          </div>
+          <p class="next"><b>Coming next:</b> approval twins that learn how each approver decides.</p>
+          <p class="powered">Powered by Claude</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="stack">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Built for the Indonesian enterprise stack</div>
+        <h2>The systems you actually run</h2>
+        <p>We start with vendor and customer master data, then extend to items and chart of accounts.</p>
+      </div>
+      <div class="connectors">
+        <div class="conn"><b>Dynamics 365 F&amp;O</b><span>Vendors, customers, parties</span><span class="pill">Planned</span></div>
+        <div class="conn"><b>Dynamics AX 2012</b><span>Vendors, customers</span><span class="pill">Planned</span></div>
+        <div class="conn"><b>Odoo</b><span>Partners, contacts</span><span class="pill">Planned</span></div>
+        <div class="conn"><b>Epicor</b><span>Suppliers, customers</span><span class="pill">Planned</span></div>
+        <div class="conn"><b>Coretax</b><span>NPWP and NITKU checks</span><span class="pill">Planned</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap two">
+      <div class="section-head">
+        <div class="eyebrow">Your data</div>
+        <h2>Built for companies that guard their data</h2>
+        <p>Vendor records hold tax IDs and bank accounts. Padu Data is designed with Indonesia's Personal Data Protection Law (UU PDP) in mind, and deployment options and data handling are agreed with each design partner.</p>
+      </div>
+      <div class="section-head">
+        <div class="eyebrow">Status</div>
+        <h2>Now in development</h2>
+        <p>We're working with a small number of design partners running two or more ERPs. Founded in 2026, independent and focused on Indonesia.</p>
+        <div class="founder">
+          <div class="avatar" aria-hidden="true">FI</div>
+          <div><b>Ferry Iswono, founder</b><span>ERP and Azure engineer with hands-on integration and Coretax reconciliation experience across Indonesian enterprises.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="contact">
+    <div class="wrap">
+      <div class="cta-box">
+        <div class="eyebrow">Design partners</div>
+        <h2>Running more than one ERP? Let's talk.</h2>
+        <p>Tell us which systems you run and where your master data hurts. We'll show you what Padu Data finds.</p>
+        <div class="email-row">
+          <span class="email" id="email">hello@padudata.com</span>
+          <button class="btn btn-ghost" type="button" id="copy-btn">Copy email</button>
+          <span class="copied" id="copied" aria-live="polite"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Padu Data</span>
+    <span class="mono">padudata.com</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var who = document.getElementById('who');
+  document.getElementById('approve-btn').addEventListener('click', function () {
+    who.textContent = 'Approved · synced to 3 systems';
+    who.classList.add('done');
+  });
+  document.getElementById('reject-btn').addEventListener('click', function () {
+    who.textContent = 'Sent back to procurement';
+    who.classList.remove('done');
+  });
+  var copied = document.getElementById('copied');
+  document.getElementById('copy-btn').addEventListener('click', function () {
+    var text = document.getElementById('email').textContent;
+    function selectFallback() {
+      var r = document.createRange();
+      r.selectNodeContents(document.getElementById('email'));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      copied.textContent = 'Selected. Press ⌘C to copy';
+    }
+    try {
+      navigator.clipboard.writeText(text).then(function () { copied.textContent = 'Copied'; }, selectFallback);
+    } catch (e) { selectFallback(); }
+  });
+})();
+</script>
+</body>
+</html>
