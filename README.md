@@ -3,6 +3,7 @@
 Website for [Padu Data](https://padudata.com), master data governance for Indonesian enterprises running multiple ERPs.
 
 - `/`: landing page
+- `/pricing/`, `/privacy/`, `/terms/`: pricing (no public prices) and bilingual legal pages
 - `/health-check/`: **Vendor Master Health Check**, a free tool that checks vendor exports from one or more ERPs for NPWP/NIK/NITKU format problems, duplicates, cross-ERP inconsistencies and shared bank accounts. It runs entirely in the browser; no data is uploaded. `/health-check/#demo` opens it with fictional sample data.
 
 Built with Vite + TypeScript into static files, served by Cloudflare Workers static assets.
@@ -11,6 +12,7 @@ Built with Vite + TypeScript into static files, served by Cloudflare Workers sta
 site/
 ├── index.html                 # landing page (HTML + inline CSS)
 ├── health-check/index.html    # tool page shell
+├── pricing/ privacy/ terms/   # secondary pages, styled by src/styles/site.css
 ├── public/                    # copied as-is: favicon, robots.txt, sitemap.xml
 └── src/
     ├── lib/                   # framework-free logic, unit tested

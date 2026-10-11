@@ -289,7 +289,7 @@ function render() {
       </section>
     </main>
 
-    <footer><div class="wrap"><a href="/">${esc(t.back)}</a><span class="mono">padudata.com</span></div></footer>`;
+    <footer><div class="wrap"><a href="/">${esc(t.back)}</a><nav class="footer-links" aria-label="Footer"><a href="/pricing/">Pricing</a><a href="/privacy/">${state.lang === "id" ? "Privasi" : "Privacy"}</a><a href="/terms/">${state.lang === "id" ? "Syarat" : "Terms"}</a></nav></div></footer>`;
 }
 
 // ---------- events (delegated, so they survive re-renders) ----------

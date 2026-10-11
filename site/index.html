@@ -271,6 +271,9 @@ td.mono { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nu
 
 footer { border-top: 1px solid var(--line); padding-block: 28px; font-size: 13px; color: var(--faint); }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 16px; }
+.footer-links a { text-decoration: none; }
+.footer-links a:hover { color: var(--fg); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -298,6 +301,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <a class="hide-sm" href="#how">How it works</a>
       <a class="hide-sm" href="#reviewer">AI reviewer</a>
       <a href="/health-check/">Free health check</a>
+      <a class="hide-sm" href="/pricing/">Pricing</a>
       <a class="btn btn-ghost hide-sm" href="#contact">Become a design partner</a>
     </nav>
   </div>
@@ -545,7 +549,12 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 <footer>
   <div class="wrap">
     <span>© 2026 Padu Data</span>
-    <span class="mono">padudata.com</span>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="/health-check/">Health check</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/terms/">Terms</a>
+    </nav>
   </div>
 </footer>
 

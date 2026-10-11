@@ -10,6 +10,9 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, "site/index.html"),
         healthCheck: resolve(__dirname, "site/health-check/index.html"),
+        pricing: resolve(__dirname, "site/pricing/index.html"),
+        privacy: resolve(__dirname, "site/privacy/index.html"),
+        terms: resolve(__dirname, "site/terms/index.html"),
       },
     },
   },
