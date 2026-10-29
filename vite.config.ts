@@ -16,6 +16,7 @@ export default defineConfig({
         privacy: resolve(__dirname, "site/privacy/index.html"),
         terms: resolve(__dirname, "site/terms/index.html"),
         kreditin: resolve(__dirname, "site/kreditin/index.html"),
+        kreditinCheckout: resolve(__dirname, "site/kreditin/checkout/index.html"),
       },
     },
   },

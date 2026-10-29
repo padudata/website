@@ -1,7 +1,7 @@
 // Worker for padudata.com. Static pages come from the assets binding; only
 // /api/* runs this code (see run_worker_first in wrangler.jsonc).
 
-import { parseSignup } from "./signup";
+import { orderCode, parseOrder } from "./order";
 
 interface Env {
   ASSETS: Fetcher;
@@ -26,8 +26,8 @@ async function verifyTurnstile(token: string, secret: string, ip: string | null)
   return out.success === true;
 }
 
-async function kreditinSignup(req: Request, env: Env): Promise<Response> {
-  // Same-origin only; the form is the only legitimate caller.
+async function kreditinOrder(req: Request, env: Env): Promise<Response> {
+  // Same-origin only; the checkout page is the only legitimate caller.
   const origin = req.headers.get("origin");
   if (origin && origin !== new URL(req.url).origin) return json({ error: "forbidden" }, 403);
 
@@ -44,38 +44,40 @@ async function kreditinSignup(req: Request, env: Env): Promise<Response> {
     return json({ error: "captcha", message: "Verifikasi anti-spam gagal. Muat ulang halaman lalu coba lagi." }, 400);
   }
 
-  const parsed = parseSignup(body);
+  const parsed = parseOrder(body);
   if (!parsed.ok) return json({ error: "invalid", errors: parsed.errors }, 422);
-  const s = parsed.data;
+  const o = parsed.data;
   const country = (req as Request & { cf?: { country?: string } }).cf?.country ?? null;
 
-  // Re-registering with the same email updates the answers instead of adding a row.
-  await env.DB.prepare(
-    `INSERT INTO signups (product, name, email, whatsapp, role, npwp_count, invoice_volume, plan, billing,
-                          source, utm_source, utm_medium, utm_campaign, referrer, country)
-     VALUES ('kreditin', ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14)
-     ON CONFLICT (product, email) DO UPDATE SET
-       name = excluded.name, whatsapp = excluded.whatsapp, role = excluded.role,
-       npwp_count = excluded.npwp_count, invoice_volume = excluded.invoice_volume,
-       plan = excluded.plan, billing = excluded.billing, source = excluded.source,
-       updated_at = datetime('now')`,
-  )
-    .bind(s.name, s.email, s.whatsapp, s.role, s.npwpCount, s.invoiceVolume, s.plan, s.billing,
-      s.source, s.utmSource, s.utmMedium, s.utmCampaign, s.referrer, country)
-    .run();
-
-  return json({ ok: true });
+  // Codes are random; on the rare collision, draw again.
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const code = orderCode((n) => crypto.getRandomValues(new Uint8Array(n)));
+    try {
+      await env.DB.prepare(
+        `INSERT INTO orders (code, product, plan, billing, amount, payment_method, name, email, whatsapp, company,
+                             role, npwp_count, invoice_volume, source, utm_source, utm_medium, utm_campaign, referrer, country)
+         VALUES (?1, 'kreditin', ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18)`,
+      )
+        .bind(code, o.plan, o.billing, o.amount, o.paymentMethod, o.name, o.email, o.whatsapp, o.company,
+          o.role, o.npwpCount, o.invoiceVolume, o.source, o.utmSource, o.utmMedium, o.utmCampaign, o.referrer, country)
+        .run();
+      return json({ ok: true, code, amount: o.amount });
+    } catch (err) {
+      if (!String(err).includes("UNIQUE")) throw err;
+    }
+  }
+  throw new Error("could not allocate an order code");
 }
 
 export default {
   async fetch(req: Request, env: Env): Promise<Response> {
     const { pathname } = new URL(req.url);
-    if (pathname === "/api/kreditin/daftar") {
+    if (pathname === "/api/kreditin/pesan") {
       if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
       try {
-        return await kreditinSignup(req, env);
+        return await kreditinOrder(req, env);
       } catch (err) {
-        console.error("kreditin signup failed", err);
+        console.error("kreditin order failed", err);
         return json({ error: "server", message: "Terjadi kesalahan di server. Coba lagi beberapa saat lagi." }, 500);
       }
     }

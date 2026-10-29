@@ -38,7 +38,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/src/kreditin/style.css">
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script type="module" src="/src/kreditin/main.ts"></script>
 </head>
 <body>
@@ -52,7 +51,7 @@
       <a class="hide-sm" href="#cara-kerja">Cara kerja</a>
       <a class="hide-sm" href="#harga">Harga</a>
       <a class="hide-sm" href="#faq">FAQ</a>
-      <a class="btn btn-primary btn-sm" href="#daftar">Daftar</a>
+      <a class="btn btn-primary btn-sm" href="/kreditin/checkout/">Berlangganan</a>
     </nav>
   </div>
 </header>
@@ -65,7 +64,7 @@
         <h1>Kreditkan ratusan faktur masukan <em>sekali jalan.</em></h1>
         <p class="lede">Berhenti klik pensil, ubah masa pengkreditan, simpan, lalu ulangi untuk faktur berikutnya. Kreditin mengerjakannya dari daftar Excel Anda, langsung di Coretax yang sedang Anda buka.</p>
         <div class="actions">
-          <a class="btn btn-primary btn-lg" href="#daftar">Daftar sekarang</a>
+          <a class="btn btn-primary btn-lg" href="/kreditin/checkout/">Berlangganan sekarang</a>
           <a class="btn btn-ghost btn-lg" href="#cara-kerja">Lihat cara kerja</a>
         </div>
         <ul class="trust">
@@ -258,7 +257,7 @@
             <li><span>Impor Excel, laporan hasil</span></li>
             <li><span>Dukungan via email</span></li>
           </ul>
-          <a class="btn btn-ghost" href="#daftar" data-pick="mandiri">Pilih Mandiri</a>
+          <a class="btn btn-ghost" href="/kreditin/checkout/?paket=mandiri" data-pick="mandiri">Pilih Mandiri</a>
         </article>
 
         <article class="plan featured" data-plan="bisnis" data-monthly="299000">
@@ -272,7 +271,7 @@
             <li><span>Semua fitur Mandiri</span></li>
             <li><span>Dukungan via WhatsApp</span></li>
           </ul>
-          <a class="btn btn-primary" href="#daftar" data-pick="bisnis">Pilih Bisnis</a>
+          <a class="btn btn-primary" href="/kreditin/checkout/?paket=bisnis" data-pick="bisnis">Pilih Bisnis</a>
         </article>
 
         <article class="plan" data-plan="konsultan" data-monthly="799000">
@@ -285,121 +284,20 @@
             <li><span>Semua fitur Bisnis</span></li>
             <li><span>Dukungan prioritas via WhatsApp</span></li>
           </ul>
-          <a class="btn btn-ghost" href="#daftar" data-pick="konsultan">Pilih Konsultan</a>
+          <a class="btn btn-ghost" href="/kreditin/checkout/?paket=konsultan" data-pick="konsultan">Pilih Konsultan</a>
         </article>
       </div>
-      <p class="plans-note">Harga belum termasuk PPN. Butuh lebih dari 25 NPWP? Pilih Konsultan dan ceritakan kebutuhan Anda di formulir, kami siapkan penawaran khusus.</p>
+      <p class="plans-note">Harga final, tanpa biaya tambahan. Butuh lebih dari 25 NPWP? Hubungi <span class="mono">hello@padudata.com</span> untuk penawaran khusus.</p>
     </div>
   </section>
 
-  <section class="block" id="daftar">
+  <section class="block" id="mulai">
     <div class="wrap">
-      <div class="signup">
-        <div class="signup-copy">
-          <div class="eyebrow">Daftar</div>
-          <h2>Daftar Kreditin</h2>
-          <p>Pendaftaran gratis dan tidak mengikat. Aktivasi akun dilakukan bertahap. Kami menghubungi Anda lewat WhatsApp untuk aktivasi, dan tagihan baru dikirim setelah akun Anda aktif.</p>
-          <ul class="signup-points">
-            <li>Gratis dan tidak mengikat</li>
-            <li>Bantuan penyiapan template untuk data Anda</li>
-            <li>Masukan Anda ikut menentukan fitur berikutnya</li>
-          </ul>
-        </div>
-
-        <form class="form" id="signup-form" novalidate>
-          <div class="field">
-            <label for="f-name">Nama</label>
-            <input id="f-name" name="name" autocomplete="name" required maxlength="120">
-            <p class="err" data-err="name"></p>
-          </div>
-          <div class="field-row">
-            <div class="field">
-              <label for="f-email">Email kerja</label>
-              <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="200">
-              <p class="err" data-err="email"></p>
-            </div>
-            <div class="field">
-              <label for="f-wa">Nomor WhatsApp</label>
-              <input id="f-wa" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="0812 3456 7890" required maxlength="30">
-              <p class="err" data-err="whatsapp"></p>
-            </div>
-          </div>
-          <div class="field">
-            <label for="f-role">Peran Anda</label>
-            <select id="f-role" name="role" required>
-              <option value="" selected disabled>Pilih</option>
-              <option value="admin-pajak">Admin / staf pajak</option>
-              <option value="staf-finance">Staf finance / akuntansi</option>
-              <option value="konsultan-pajak">Konsultan pajak</option>
-              <option value="pemilik-usaha">Pemilik usaha</option>
-              <option value="lainnya">Lainnya</option>
-            </select>
-            <p class="err" data-err="role"></p>
-          </div>
-          <div class="field-row">
-            <div class="field">
-              <label for="f-npwp">NPWP yang Anda urus</label>
-              <select id="f-npwp" name="npwpCount" required>
-                <option value="" selected disabled>Pilih</option>
-                <option value="1">1 NPWP</option>
-                <option value="2-5">2–5 NPWP</option>
-                <option value="6-25">6–25 NPWP</option>
-                <option value="26+">Lebih dari 25</option>
-              </select>
-              <p class="err" data-err="npwpCount"></p>
-            </div>
-            <div class="field">
-              <label for="f-vol">Faktur masukan per bulan</label>
-              <select id="f-vol" name="invoiceVolume" required>
-                <option value="" selected disabled>Pilih</option>
-                <option value="<100">Kurang dari 100</option>
-                <option value="100-300">100–300</option>
-                <option value="300-1000">300–1.000</option>
-                <option value="1000-5000">1.000–5.000</option>
-                <option value=">5000">Lebih dari 5.000</option>
-              </select>
-              <p class="err" data-err="invoiceVolume"></p>
-            </div>
-          </div>
-          <fieldset class="field">
-            <legend>Paket</legend>
-            <div class="seg" id="f-plan">
-              <label><input type="radio" name="plan" value="mandiri"><span>Mandiri</span></label>
-              <label><input type="radio" name="plan" value="bisnis" checked><span>Bisnis</span></label>
-              <label><input type="radio" name="plan" value="konsultan"><span>Konsultan</span></label>
-            </div>
-            <p class="err" data-err="plan"></p>
-          </fieldset>
-          <fieldset class="field">
-            <legend>Periode tagihan</legend>
-            <div class="seg" id="f-billing">
-              <label><input type="radio" name="billing" value="bulanan" checked><span>Bulanan</span></label>
-              <label><input type="radio" name="billing" value="tahunan"><span>Tahunan</span></label>
-            </div>
-            <p class="err" data-err="billing"></p>
-          </fieldset>
-          <div class="field">
-            <label for="f-source">Dari mana Anda tahu Kreditin? <span class="opt">opsional</span></label>
-            <input id="f-source" name="source" maxlength="200" placeholder="LinkedIn, grup WhatsApp, rekan kerja…">
-          </div>
-          <label class="consent">
-            <input type="checkbox" name="consent" id="f-consent">
-            <span>Saya setuju data ini disimpan dan dipakai Padu Data untuk menghubungi saya soal Kreditin, sesuai <a href="/privacy/">Kebijakan Privasi</a>.</span>
-          </label>
-          <p class="err" data-err="consent"></p>
-          <div class="cf-turnstile" data-sitekey="%VITE_TURNSTILE_SITEKEY%" data-language="id" data-size="flexible"></div>
-          <button class="btn btn-primary btn-lg" type="submit" id="f-submit">Daftar sekarang</button>
-          <p class="err form-err" id="form-err" role="alert"></p>
-        </form>
-
-        <div class="done-box" id="signup-done" hidden tabindex="-1">
-          <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="28" height="28" rx="8" fill="var(--accent)"/><path d="M9.5 16.5l4.2 4.2 8.8-9.4" fill="none" stroke="var(--on-accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <h3>Terima kasih, Anda sudah terdaftar!</h3>
-          <p>Pendaftaran Anda sudah kami catat. Aktivasi akun dilakukan bertahap, dan tim kami akan menghubungi Anda lewat WhatsApp di nomor <b id="done-wa"></b>.</p>
-          <p class="muted">Punya rekan yang juga mengurus faktur masukan? Bagikan halaman ini supaya mereka ikut mendaftar.</p>
-          <button class="btn btn-ghost" type="button" id="share-btn">Salin link halaman</button>
-          <span class="copied" id="share-copied" aria-live="polite"></span>
-        </div>
+      <div class="cta-box">
+        <div class="eyebrow">Mulai</div>
+        <h2>Siap berhenti klik satu per satu?</h2>
+        <p>Pilih paket dan metode pembayaran di halaman checkout. Aktivasi akun dilakukan bertahap, dan kami menghubungi Anda lewat WhatsApp saat akun siap.</p>
+        <a class="btn btn-primary btn-lg" href="/kreditin/checkout/">Berlangganan sekarang</a>
       </div>
     </div>
   </section>
@@ -440,12 +338,12 @@
           <p>Faktur tersebut ditandai "perlu dicek" di laporan beserta alasannya, misalnya masa pengkreditan sudah lewat batas atau faktur sedang dikunci. Anda bisa menjalankan ulang hanya faktur yang gagal.</p>
         </details>
         <details>
-          <summary>Apa yang terjadi setelah saya mendaftar?</summary>
-          <p>Pendaftaran gratis dan tidak mengikat. Aktivasi dilakukan bertahap, dan kami menghubungi Anda lewat WhatsApp untuk aktivasi akun. Tagihan pertama baru dikirim setelah akun Anda aktif.</p>
+          <summary>Apa yang terjadi setelah saya membuat pesanan?</summary>
+          <p>Pesanan Anda tercatat dengan nomor pesanan, tetapi belum ada tagihan. Aktivasi akun dilakukan bertahap, dan kami menghubungi Anda lewat WhatsApp saat akun siap diaktifkan, beserta instruksi pembayarannya.</p>
         </details>
         <details>
           <summary>Bagaimana cara bayarnya?</summary>
-          <p>Transfer bank dalam rupiah, berdasarkan tagihan yang kami kirim setelah akun aktif. Paket tahunan dibayar di muka untuk 12 bulan dengan harga 10 bulan.</p>
+          <p>Pilih metode di halaman checkout: QRIS, virtual account (BCA, BNI, BRI, Mandiri, Permata), e-wallet (OVO, DANA, ShopeePay), atau gerai Alfamart dan Indomaret. Harga yang tertera sudah final, tanpa biaya layanan pembayaran. Paket tahunan dibayar di muka untuk 12 bulan dengan harga 10 bulan.</p>
         </details>
         <details>
           <summary>Bisa ganti paket atau berhenti?</summary>

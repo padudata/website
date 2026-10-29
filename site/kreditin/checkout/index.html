@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Checkout · Kreditin</title>
+<meta name="description" content="Pesan langganan Kreditin: pilih paket, isi data pemesan, dan pilih metode pembayaran.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://padudata.com/kreditin/checkout/">
+<link rel="icon" href="/kreditin-icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/src/kreditin/style.css">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script type="module" src="/src/kreditin/checkout.ts"></script>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="/kreditin/">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="28" height="28" rx="8" fill="var(--accent)"/><path d="M9.5 16.5l4.2 4.2 8.8-9.4" fill="none" stroke="var(--on-accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Kreditin</span>
+    </a>
+    <span class="nav-secure"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 7V5a2.5 2.5 0 015 0v2" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Checkout</span>
+  </div>
+</header>
+
+<main class="wrap checkout">
+  <a class="back" href="/kreditin/#harga">← Kembali ke paket &amp; harga</a>
+  <h1>Checkout</h1>
+
+  <form id="order-form" class="co-grid" novalidate>
+    <div class="co-main">
+      <section class="co-step">
+        <h2><span class="step-n">1</span>Paket</h2>
+        <div class="plan-pick" id="plan-pick">
+          <label class="pick">
+            <input type="radio" name="plan" value="mandiri">
+            <span class="pick-body"><b>Mandiri</b><small>1 NPWP · 300 faktur/bulan</small><span class="pick-price" data-price="mandiri"></span></span>
+          </label>
+          <label class="pick">
+            <input type="radio" name="plan" value="bisnis" checked>
+            <span class="pick-body"><b>Bisnis</b><small>5 NPWP · 2.000 faktur/bulan</small><span class="pick-price" data-price="bisnis"></span></span>
+          </label>
+          <label class="pick">
+            <input type="radio" name="plan" value="konsultan">
+            <span class="pick-body"><b>Konsultan</b><small>25 NPWP · 10.000 faktur/bulan</small><span class="pick-price" data-price="konsultan"></span></span>
+          </label>
+        </div>
+        <p class="err" data-err="plan"></p>
+        <div class="seg seg-inline" role="radiogroup" aria-label="Periode tagihan">
+          <label><input type="radio" name="billing" value="bulanan" checked><span>Bulanan</span></label>
+          <label><input type="radio" name="billing" value="tahunan"><span>Tahunan · hemat 2 bln</span></label>
+        </div>
+        <p class="err" data-err="billing"></p>
+      </section>
+
+      <section class="co-step">
+        <h2><span class="step-n">2</span>Data pemesan</h2>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-name">Nama</label>
+            <input id="f-name" name="name" autocomplete="name" required maxlength="120">
+            <p class="err" data-err="name"></p>
+          </div>
+          <div class="field">
+            <label for="f-company">Nama usaha <span class="opt">opsional</span></label>
+            <input id="f-company" name="company" autocomplete="organization" maxlength="160">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="200">
+            <p class="err" data-err="email"></p>
+          </div>
+          <div class="field">
+            <label for="f-wa">Nomor WhatsApp</label>
+            <input id="f-wa" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="0812 3456 7890" required maxlength="30">
+            <p class="err" data-err="whatsapp"></p>
+          </div>
+        </div>
+        <div class="field-row three">
+          <div class="field">
+            <label for="f-role">Peran Anda</label>
+            <select id="f-role" name="role" required>
+              <option value="" selected disabled>Pilih</option>
+              <option value="admin-pajak">Admin / staf pajak</option>
+              <option value="staf-finance">Staf finance / akuntansi</option>
+              <option value="konsultan-pajak">Konsultan pajak</option>
+              <option value="pemilik-usaha">Pemilik usaha</option>
+              <option value="lainnya">Lainnya</option>
+            </select>
+            <p class="err" data-err="role"></p>
+          </div>
+          <div class="field">
+            <label for="f-npwp">NPWP yang diurus</label>
+            <select id="f-npwp" name="npwpCount" required>
+              <option value="" selected disabled>Pilih</option>
+              <option value="1">1 NPWP</option>
+              <option value="2-5">2–5 NPWP</option>
+              <option value="6-25">6–25 NPWP</option>
+              <option value="26+">Lebih dari 25</option>
+            </select>
+            <p class="err" data-err="npwpCount"></p>
+          </div>
+          <div class="field">
+            <label for="f-vol">Faktur masukan/bulan</label>
+            <select id="f-vol" name="invoiceVolume" required>
+              <option value="" selected disabled>Pilih</option>
+              <option value="<100">Kurang dari 100</option>
+              <option value="100-300">100–300</option>
+              <option value="300-1000">300–1.000</option>
+              <option value="1000-5000">1.000–5.000</option>
+              <option value=">5000">Lebih dari 5.000</option>
+            </select>
+            <p class="err" data-err="invoiceVolume"></p>
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-source">Dari mana Anda tahu Kreditin? <span class="opt">opsional</span></label>
+          <input id="f-source" name="source" maxlength="200" placeholder="LinkedIn, grup WhatsApp, rekan kerja…">
+        </div>
+      </section>
+
+      <section class="co-step">
+        <h2><span class="step-n">3</span>Metode pembayaran</h2>
+        <div class="pay" id="pay">
+          <div class="pay-group">
+            <span class="pay-label">QRIS</span>
+            <label class="pay-opt"><input type="radio" name="paymentMethod" value="qris" checked><span>QRIS<small>Semua e-wallet &amp; mobile banking</small></span></label>
+          </div>
+          <div class="pay-group">
+            <span class="pay-label">Virtual Account</span>
+            <label class="pay-opt"><input type="radio" name="paymentMethod" value="va-bca"><span>BCA</span></label>
+            <label class="pay-opt"><input type="radio" name="paymentMethod" value="va-bni"><span>BNI</span></label>
+            <label class="pay-opt"><input type="radio" name="paymentMethod" value="va-bri"><span>BRI</span></label>
+            <label class="pay-opt"><input type="radio" name="paymentMethod" value="va-mandiri"><span>Mandiri</span></label>
+            <label class="pay-opt"><input type="radio" name="paymentMethod" value="va-permata"><span>Permata</span></label>
+          </div>
+          <div class="pay-group">
+            <span class="pay-label">E-wallet</span>
+            <label class="pay-opt"><input type="radio" name="paymentMethod" value="ovo"><span>OVO</span></label>
+            <label class="pay-opt"><input type="radio" name="paymentMethod" value="dana"><span>DANA</span></label>
+            <label class="pay-opt"><input type="radio" name="paymentMethod" value="shopeepay"><span>ShopeePay</span></label>
+          </div>
+          <div class="pay-group">
+            <span class="pay-label">Gerai retail</span>
+            <label class="pay-opt"><input type="radio" name="paymentMethod" value="alfamart"><span>Alfamart</span></label>
+            <label class="pay-opt"><input type="radio" name="paymentMethod" value="indomaret"><span>Indomaret</span></label>
+          </div>
+        </div>
+        <p class="err" data-err="paymentMethod"></p>
+      </section>
+    </div>
+
+    <aside class="co-side">
+      <div class="summary">
+        <h2>Ringkasan pesanan</h2>
+        <div class="sum-item">
+          <div>
+            <b id="sum-plan">Kreditin Bisnis</b>
+            <small id="sum-detail">5 NPWP · 2.000 faktur/bulan</small>
+            <small id="sum-period">Tagihan bulanan</small>
+          </div>
+          <span id="sum-price" class="mono"></span>
+        </div>
+        <dl class="sum-lines">
+          <div><dt>Subtotal</dt><dd id="sum-subtotal" class="mono"></dd></div>
+          <div><dt>Biaya layanan pembayaran</dt><dd class="mono">Gratis</dd></div>
+          <div class="sum-total"><dt>Total</dt><dd id="sum-total" class="mono"></dd></div>
+        </dl>
+        <p class="sum-method">Dibayar dengan <b id="sum-method">QRIS</b></p>
+
+        <label class="consent">
+          <input type="checkbox" name="consent" id="f-consent">
+          <span>Saya setuju dengan <a href="/terms/" target="_blank">Ketentuan Layanan</a> dan <a href="/privacy/" target="_blank">Kebijakan Privasi</a> Padu Data.</span>
+        </label>
+        <p class="err" data-err="consent"></p>
+        <div class="cf-turnstile" data-sitekey="%VITE_TURNSTILE_SITEKEY%" data-language="id" data-size="flexible"></div>
+        <button class="btn btn-primary btn-lg" type="submit" id="f-submit">Buat pesanan</button>
+        <p class="err form-err" id="form-err" role="alert"></p>
+        <p class="sum-note">Membuat pesanan belum menagih apa pun. Instruksi pembayaran kami kirim lewat WhatsApp dan email saat akun Kreditin Anda siap diaktifkan.</p>
+      </div>
+      <ul class="sum-trust">
+        <li>Harga final, tanpa biaya tambahan</li>
+        <li>Data faktur pajak tidak diminta di halaman ini</li>
+        <li>Pertanyaan? <span class="mono">hello@padudata.com</span></li>
+      </ul>
+    </aside>
+  </form>
+
+  <section class="done-box order-done" id="order-done" hidden tabindex="-1">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="28" height="28" rx="8" fill="var(--accent)"/><path d="M9.5 16.5l4.2 4.2 8.8-9.4" fill="none" stroke="var(--on-accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <h2>Pesanan Anda tercatat</h2>
+    <dl class="done-meta">
+      <div><dt>Nomor pesanan</dt><dd class="mono" id="done-code"></dd></div>
+      <div><dt>Paket</dt><dd id="done-plan"></dd></div>
+      <div><dt>Total</dt><dd class="mono" id="done-total"></dd></div>
+      <div><dt>Metode pembayaran</dt><dd id="done-method"></dd></div>
+    </dl>
+    <p>Belum ada tagihan yang dibuat. Aktivasi akun dilakukan bertahap, dan kami akan mengirim instruksi pembayaran ke WhatsApp <b id="done-wa"></b> dan email Anda saat akun Kreditin siap diaktifkan.</p>
+    <p class="muted">Simpan nomor pesanan di atas untuk keperluan korespondensi.</p>
+    <a class="btn btn-ghost" href="/kreditin/">Kembali ke halaman Kreditin</a>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-brand">
+      <span>Kreditin adalah produk <a href="/">Padu Data</a>.</span>
+      <span>Tidak berafiliasi dengan Direktorat Jenderal Pajak. Coretax adalah sistem milik DJP.</span>
+    </div>
+    <nav aria-label="Footer">
+      <a href="/privacy/">Privasi</a>
+      <a href="/terms/">Ketentuan</a>
+      <span class="mono">hello@padudata.com</span>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>
