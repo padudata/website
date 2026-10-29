@@ -19,8 +19,6 @@ function setBilling(billing: "bulanan" | "tahunan") {
     const per = billing === "tahunan" ? "/tahun" : "/bulan";
     plan.querySelector(".amount")!.textContent = rupiah(price);
     plan.querySelector(".per")!.textContent = per;
-    plan.querySelector(".founding-amount")!.textContent = rupiah(price / 2);
-    plan.querySelector(".founding-per")!.textContent = billing === "tahunan" ? "/tahun pertama" : "/bulan";
   });
   const radio = document.querySelector<HTMLInputElement>(`input[name="billing"][value="${billing}"]`);
   if (radio) radio.checked = true;
