@@ -4,9 +4,11 @@ Website for [Padu Data](https://padudata.com), master data governance for Indone
 
 - `/`: landing page
 - `/pricing/`, `/privacy/`, `/terms/`: pricing (no public prices) and bilingual legal pages
+- `/kreditin/`: product page for **Kreditin** (Indonesian), a Chrome extension for bulk-changing the crediting period of input VAT invoices in Coretax. The page tests demand: the early-access form posts to `/api/kreditin/daftar`, which verifies Cloudflare Turnstile and stores the signup in D1. No payment is taken.
 - `/health-check/`: **Vendor Master Health Check**, a free tool that checks vendor exports from one or more ERPs for NPWP/NIK/NITKU format problems, duplicates, cross-ERP inconsistencies and shared bank accounts. It runs entirely in the browser; no data is uploaded. `/health-check/#demo` opens it with fictional sample data.
 
 Built with Vite + TypeScript into static files, served by Cloudflare Workers static assets.
+A small Worker (`worker/`) handles `/api/*` only; every other path is served straight from `dist/`.
 
 ```
 site/
@@ -20,6 +22,8 @@ site/
     │   ├── names.ts           # company name normalization, Jaro-Winkler
     │   └── checks.ts          # all health checks over vendor records
     └── health-check/          # UI: parsing, column mapping, i18n (ID/EN), rendering
+worker/                        # Worker for /api/* (Kreditin signup) + D1
+migrations/                    # D1 schema
 tests/                         # Vitest
 brand/                         # logo files
 wrangler.jsonc                 # Worker config: serves dist/, custom domains
@@ -31,6 +35,18 @@ wrangler.jsonc                 # Worker config: serves dist/, custom domains
 npm install
 npm run dev      # http://localhost:5173
 npm test
+```
+
+Worker + D1 locally (Turnstile test keys from `.env` and `.dev.vars`):
+
+```sh
+npm run dev:worker   # build, apply migrations to local D1, wrangler dev on :8787
+```
+
+## Kreditin signups
+
+```sh
+npm run signups      # list Kreditin signups from the production D1
 ```
 
 ## Deploy

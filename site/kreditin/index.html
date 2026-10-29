@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kreditin · Kreditkan faktur pajak masukan Coretax secara massal</title>
+<meta name="description" content="Kreditin adalah Chrome extension yang mengubah masa pengkreditan ratusan faktur pajak masukan di Coretax dari daftar Excel Anda. Tanpa klik satu per satu, data faktur tetap di browser Anda.">
+<link rel="canonical" href="https://padudata.com/kreditin/">
+<link rel="icon" href="/kreditin-icon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Kreditin by Padu Data">
+<meta property="og:title" content="Kreditin: kreditkan ratusan faktur masukan Coretax sekali jalan">
+<meta property="og:description" content="Ubah masa pengkreditan faktur pajak masukan secara massal dari Excel. Chrome extension, data faktur tetap di browser Anda.">
+<meta property="og:url" content="https://padudata.com/kreditin/">
+<meta property="og:image" content="https://padudata.com/kreditin-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="id_ID">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Kreditin",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Google Chrome, Microsoft Edge",
+  "url": "https://padudata.com/kreditin/",
+  "description": "Chrome extension untuk mengubah masa pengkreditan faktur pajak masukan di Coretax secara massal dari daftar Excel.",
+  "offers": [
+    { "@type": "Offer", "name": "Mandiri", "price": "99000", "priceCurrency": "IDR" },
+    { "@type": "Offer", "name": "Bisnis", "price": "299000", "priceCurrency": "IDR" },
+    { "@type": "Offer", "name": "Konsultan", "price": "799000", "priceCurrency": "IDR" }
+  ],
+  "publisher": { "@type": "Organization", "name": "Padu Data", "url": "https://padudata.com/" }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/src/kreditin/style.css">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script type="module" src="/src/kreditin/main.ts"></script>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="/kreditin/">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="28" height="28" rx="8" fill="var(--accent)"/><path d="M9.5 16.5l4.2 4.2 8.8-9.4" fill="none" stroke="var(--on-accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Kreditin</span>
+    </a>
+    <nav class="nav-links" aria-label="Bagian halaman">
+      <a class="hide-sm" href="#cara-kerja">Cara kerja</a>
+      <a class="hide-sm" href="#harga">Harga</a>
+      <a class="hide-sm" href="#faq">FAQ</a>
+      <a class="btn btn-primary btn-sm" href="#daftar">Daftar</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <div class="eyebrow">Chrome extension untuk Coretax</div>
+        <h1>Kreditkan ratusan faktur masukan <em>sekali jalan.</em></h1>
+        <p class="lede">Berhenti klik pensil, ubah masa pengkreditan, simpan, lalu ulangi untuk faktur berikutnya. Kreditin mengerjakannya dari daftar Excel Anda, langsung di Coretax yang sedang Anda buka.</p>
+        <div class="actions">
+          <a class="btn btn-primary btn-lg" href="#daftar">Daftar &amp; amankan harga founding member</a>
+          <a class="btn btn-ghost btn-lg" href="#cara-kerja">Lihat cara kerja</a>
+        </div>
+        <ul class="trust">
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.8l5 2v3.9c0 3.2-2.1 5.7-5 6.5-2.9-.8-5-3.3-5-6.5V3.8l5-2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>Data faktur tetap di browser Anda</li>
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.5" y="2.5" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5 8l2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Laporan hasil per faktur</li>
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="5.5" cy="6" r="2.3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="11" cy="6" r="2.3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M1.8 13c.5-2 2-3 3.7-3s3.2 1 3.7 3M8.3 10.4c.7-.3 1.6-.4 2.7-.4 1.7 0 3.2 1 3.7 3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Untuk banyak NPWP sekaligus</li>
+        </ul>
+      </div>
+
+      <figure class="mock" aria-label="Ilustrasi: Kreditin memproses daftar faktur pajak masukan di halaman Coretax">
+        <div class="mock-bar">
+          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="mock-title">Coretax · Faktur Pajak Masukan</span>
+        </div>
+        <div class="mock-body">
+          <table class="inv">
+            <thead>
+              <tr><th>Nomor faktur</th><th class="hide-xs">Penjual</th><th class="num">PPN</th><th>Masa kredit</th></tr>
+            </thead>
+            <tbody>
+              <tr class="done"><td class="mono">04002500118342</td><td class="hide-xs">PT Sinar Contoh</td><td class="num">1.320.000</td><td><span class="pill ok">Okt 2026</span></td></tr>
+              <tr class="done"><td class="mono">04002500118355</td><td class="hide-xs">CV Maju Fiktif</td><td class="num">418.000</td><td><span class="pill ok">Okt 2026</span></td></tr>
+              <tr class="done"><td class="mono">04002500119021</td><td class="hide-xs">PT Rekaan Jaya</td><td class="num">2.904.000</td><td><span class="pill ok">Nov 2026</span></td></tr>
+              <tr class="active"><td class="mono">04002500119107</td><td class="hide-xs">PT Andai Abadi</td><td class="num">770.000</td><td><span class="pill run">Memproses…</span></td></tr>
+              <tr><td class="mono">04002500119288</td><td class="hide-xs">UD Contoh Makmur</td><td class="num">99.000</td><td><span class="pill">Sep 2026</span></td></tr>
+              <tr><td class="mono">04002500119310</td><td class="hide-xs">PT Semisal Niaga</td><td class="num">5.610.000</td><td><span class="pill">Sep 2026</span></td></tr>
+            </tbody>
+          </table>
+
+          <div class="popup">
+            <div class="popup-head">
+              <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="28" height="28" rx="8" fill="var(--accent)"/><path d="M9.5 16.5l4.2 4.2 8.8-9.4" fill="none" stroke="var(--on-accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <b>Kreditin</b>
+              <span class="chip mono">NPWP ··· 4012</span>
+            </div>
+            <div class="file"><span class="xls" aria-hidden="true">XLS</span><span>faktur-masukan-okt.xlsx<small>300 faktur · 298 cocok</small></span></div>
+            <div class="progress" role="img" aria-label="214 dari 300 faktur selesai"><span></span></div>
+            <div class="progress-meta"><span class="mono">214 / 300</span><span>sisa ± 9 menit</span></div>
+            <div class="counts">
+              <span><i class="d ok"></i>211 berhasil</span>
+              <span><i class="d warn"></i>3 perlu dicek</span>
+            </div>
+            <div class="popup-actions"><span class="btn btn-ghost btn-xs">Jeda</span><span class="btn btn-ghost btn-xs">Lihat laporan</span></div>
+          </div>
+        </div>
+        <figcaption>Ilustrasi · data fiktif</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="block" id="masalah">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Masalahnya</div>
+        <h2>Pekerjaan klik yang sama, ratusan kali, setiap masa pajak</h2>
+        <p>Sejak Coretax, faktur masukan dari penjual otomatis masuk ke akun Anda. Tapi kalau masa pengkreditannya perlu diubah, Coretax meminta Anda membukanya satu per satu.</p>
+      </div>
+      <div class="pain">
+        <article>
+          <span class="pain-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 3.5l9 9-3.8.6 2.4 5-2.2 1-2.4-5L8 17V3.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+          <h3>Klik, ubah, simpan, ulangi</h3>
+          <p>Pensil, pilih masa, simpan, tunggu halaman, cari faktur berikutnya. Untuk 300 faktur, itu lebih dari seribu klik.</p>
+        </article>
+        <article>
+          <span class="pain-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4l9 15.5H3L12 4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 10v4M12 16.8v.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+          <h3>Satu salah masa, SPT ikut salah</h3>
+          <p>Mata yang lelah melewatkan satu faktur atau memilih masa yang keliru. Ketahuannya baru saat rekonsiliasi, atau lebih buruk lagi, saat pemeriksaan.</p>
+        </article>
+        <article>
+          <span class="pain-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+          <h3>Terulang tiap bulan, tiap NPWP</h3>
+          <p>Konsultan dan grup usaha mengerjakannya untuk banyak NPWP, dan selalu di minggu yang sama: menjelang batas lapor SPT Masa PPN.</p>
+        </article>
+      </div>
+      <div class="calc">
+        <div><span class="calc-label">Contoh hitungan manual</span><span class="mono">300 faktur × ±30 detik</span></div>
+        <div class="calc-eq">=</div>
+        <div><b>±2,5 jam</b><span>per NPWP, per masa pajak</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="cara-kerja">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Cara kerja</div>
+        <h2>Dari Excel ke Coretax dalam empat langkah</h2>
+        <p>Kreditin bekerja di tab Coretax yang Anda buka sendiri, mengerjakan persis yang biasa Anda lakukan dengan mouse, hanya jauh lebih cepat dan tanpa terlewat.</p>
+      </div>
+      <ol class="steps">
+        <li>
+          <span class="step-n">1</span>
+          <h3>Siapkan daftar faktur</h3>
+          <p>Isi template Excel: nomor faktur dan masa pengkreditan tujuan. Bisa juga dari ekspor ERP atau rekap Anda sendiri.</p>
+          <div class="mini sheet" aria-hidden="true">
+            <div class="row h"><span>Nomor faktur</span><span>Masa kredit</span></div>
+            <div class="row"><span class="mono">0400250011…342</span><span>10-2026</span></div>
+            <div class="row"><span class="mono">0400250011…355</span><span>10-2026</span></div>
+            <div class="row"><span class="mono">0400250011…021</span><span>11-2026</span></div>
+          </div>
+        </li>
+        <li>
+          <span class="step-n">2</span>
+          <h3>Buka Coretax, muat file</h3>
+          <p>Login ke Coretax seperti biasa, buka menu Pajak Masukan, lalu muat file Excel lewat extension Kreditin.</p>
+          <div class="mini match" aria-hidden="true">
+            <div class="match-row"><span>Faktur di file</span><b class="mono">300</b></div>
+            <div class="match-row ok"><span>Ditemukan di Coretax</span><b class="mono">298</b></div>
+            <div class="match-row warn"><span>Tidak ditemukan</span><b class="mono">2</b></div>
+          </div>
+        </li>
+        <li>
+          <span class="step-n">3</span>
+          <h3>Klik Mulai, tinggal ditinggal</h3>
+          <p>Kreditin mengubah masa pengkreditan faktur demi faktur. Bisa dijeda dan dilanjutkan kapan saja.</p>
+          <div class="mini running" aria-hidden="true">
+            <div class="progress"><span></span></div>
+            <div class="progress-meta"><span class="mono">214 / 298</span><span>berjalan</span></div>
+          </div>
+        </li>
+        <li>
+          <span class="step-n">4</span>
+          <h3>Cek laporan, unduh Excel</h3>
+          <p>Setiap faktur diberi status berhasil atau perlu dicek beserta alasannya. Laporan bisa diunduh untuk arsip dan rekonsiliasi.</p>
+          <div class="mini report" aria-hidden="true">
+            <span class="pill ok">295 berhasil</span>
+            <span class="pill warn">3 perlu dicek</span>
+            <span class="pill">2 tidak ditemukan</span>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block" id="fitur">
+    <div class="wrap two">
+      <div class="section-head">
+        <div class="eyebrow">Fitur</div>
+        <h2>Dibuat untuk orang yang mengurus pajak masukan setiap bulan</h2>
+        <p>Admin pajak, staf finance, dan kantor konsultan yang memegang banyak klien.</p>
+      </div>
+      <ul class="features">
+        <li><b>Impor Excel &amp; CSV</b><span>Template siap pakai, atau petakan kolom dari file Anda sendiri.</span></li>
+        <li><b>Pencocokan otomatis</b><span>Faktur di file dicocokkan dengan daftar di Coretax sebelum ada yang diubah.</span></li>
+        <li><b>Masa kredit per faktur</b><span>Setiap faktur bisa diarahkan ke masa yang berbeda dalam satu kali jalan.</span></li>
+        <li><b>Jeda &amp; lanjutkan</b><span>Koneksi putus atau sesi habis? Lanjutkan dari faktur terakhir, tanpa mengulang dari awal.</span></li>
+        <li><b>Laporan hasil</b><span>Berhasil, perlu dicek, atau tidak ditemukan, siap diunduh ke Excel.</span></li>
+        <li><b>Banyak NPWP</b><span>Pindah antar-NPWP klien tanpa ganti akun Kreditin. Kuota mengikuti paket Anda.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" id="keamanan">
+    <div class="wrap">
+      <div class="secure">
+        <div class="secure-copy">
+          <div class="eyebrow">Keamanan data</div>
+          <h2>Data faktur Anda tidak pernah meninggalkan browser</h2>
+          <p>Kreditin bekerja sepenuhnya di komputer Anda. File Excel dan isi faktur diproses di browser, tidak diunggah ke server kami. Server Kreditin hanya mengecek akun dan kuota langganan Anda.</p>
+        </div>
+        <ul class="secure-list">
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Anda login Coretax sendiri.</b> Kreditin tidak meminta dan tidak menyimpan password Coretax atau sertifikat elektronik Anda.</span></li>
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Hanya mengubah masa pengkreditan.</b> Kreditin tidak membuat, menghapus, atau melaporkan apa pun atas nama Anda.</span></li>
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Anda tetap memegang kendali.</b> Daftar faktur yang akan diubah ditampilkan dulu dan baru dijalankan setelah Anda menekan Mulai.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="harga">
+    <div class="wrap">
+      <div class="section-head center">
+        <div class="eyebrow">Harga</div>
+        <h2>Pilih sesuai jumlah NPWP yang Anda urus</h2>
+        <p>Harga founding member: <b>diskon 50% selama 12 bulan pertama</b> untuk 100 pendaftar pertama.</p>
+        <div class="billing" role="radiogroup" aria-label="Periode tagihan">
+          <button type="button" role="radio" aria-checked="true" data-billing="bulanan">Bulanan</button>
+          <button type="button" role="radio" aria-checked="false" data-billing="tahunan">Tahunan <span class="save">hemat 2 bulan</span></button>
+        </div>
+      </div>
+
+      <div class="plans">
+        <article class="plan" data-plan="mandiri" data-monthly="99000">
+          <h3>Mandiri</h3>
+          <p class="plan-for">Untuk satu PKP yang mengurus pajaknya sendiri.</p>
+          <div class="price"><span class="amount">Rp 99.000</span><span class="per">/bulan</span></div>
+          <p class="founding">Founding member: <b class="founding-amount">Rp 49.500</b><span class="founding-per">/bulan</span></p>
+          <ul>
+            <li><span><b>1 NPWP</b></span></li>
+            <li><span>Hingga <b>300 faktur</b> per bulan</span></li>
+            <li><span>Impor Excel, laporan hasil</span></li>
+            <li><span>Dukungan via email</span></li>
+          </ul>
+          <a class="btn btn-ghost" href="#daftar" data-pick="mandiri">Pilih Mandiri</a>
+        </article>
+
+        <article class="plan featured" data-plan="bisnis" data-monthly="299000">
+          <span class="tag">Paling cocok untuk grup usaha</span>
+          <h3>Bisnis</h3>
+          <p class="plan-for">Untuk grup usaha dengan beberapa entitas.</p>
+          <div class="price"><span class="amount">Rp 299.000</span><span class="per">/bulan</span></div>
+          <p class="founding">Founding member: <b class="founding-amount">Rp 149.500</b><span class="founding-per">/bulan</span></p>
+          <ul>
+            <li><span><b>5 NPWP</b></span></li>
+            <li><span>Hingga <b>2.000 faktur</b> per bulan</span></li>
+            <li><span>Semua fitur Mandiri</span></li>
+            <li><span>Dukungan via WhatsApp</span></li>
+          </ul>
+          <a class="btn btn-primary" href="#daftar" data-pick="bisnis">Pilih Bisnis</a>
+        </article>
+
+        <article class="plan" data-plan="konsultan" data-monthly="799000">
+          <h3>Konsultan</h3>
+          <p class="plan-for">Untuk kantor konsultan pajak dengan banyak klien.</p>
+          <div class="price"><span class="amount">Rp 799.000</span><span class="per">/bulan</span></div>
+          <p class="founding">Founding member: <b class="founding-amount">Rp 399.500</b><span class="founding-per">/bulan</span></p>
+          <ul>
+            <li><span><b>25 NPWP</b></span></li>
+            <li><span>Hingga <b>10.000 faktur</b> per bulan</span></li>
+            <li><span>Semua fitur Bisnis</span></li>
+            <li><span>Dukungan prioritas via WhatsApp</span></li>
+          </ul>
+          <a class="btn btn-ghost" href="#daftar" data-pick="konsultan">Pilih Konsultan</a>
+        </article>
+      </div>
+      <p class="plans-note">Harga belum termasuk PPN. Butuh lebih dari 25 NPWP? Pilih Konsultan dan ceritakan kebutuhan Anda di formulir, kami siapkan penawaran khusus.</p>
+    </div>
+  </section>
+
+  <section class="block" id="daftar">
+    <div class="wrap">
+      <div class="signup">
+        <div class="signup-copy">
+          <div class="eyebrow">Daftar</div>
+          <h2>Amankan harga founding member</h2>
+          <p>Pendaftaran gratis dan tidak mengikat. Aktivasi akun dilakukan bertahap. Kami menghubungi Anda lewat WhatsApp untuk aktivasi, dan tagihan baru dikirim setelah akun Anda aktif.</p>
+          <ul class="signup-points">
+            <li>Diskon 50% selama 12 bulan pertama</li>
+            <li>Bantuan penyiapan template untuk data Anda</li>
+            <li>Masukan Anda ikut menentukan fitur berikutnya</li>
+          </ul>
+        </div>
+
+        <form class="form" id="signup-form" novalidate>
+          <div class="field">
+            <label for="f-name">Nama</label>
+            <input id="f-name" name="name" autocomplete="name" required maxlength="120">
+            <p class="err" data-err="name"></p>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-email">Email kerja</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="200">
+              <p class="err" data-err="email"></p>
+            </div>
+            <div class="field">
+              <label for="f-wa">Nomor WhatsApp</label>
+              <input id="f-wa" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="0812 3456 7890" required maxlength="30">
+              <p class="err" data-err="whatsapp"></p>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-role">Peran Anda</label>
+            <select id="f-role" name="role" required>
+              <option value="" selected disabled>Pilih</option>
+              <option value="admin-pajak">Admin / staf pajak</option>
+              <option value="staf-finance">Staf finance / akuntansi</option>
+              <option value="konsultan-pajak">Konsultan pajak</option>
+              <option value="pemilik-usaha">Pemilik usaha</option>
+              <option value="lainnya">Lainnya</option>
+            </select>
+            <p class="err" data-err="role"></p>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-npwp">NPWP yang Anda urus</label>
+              <select id="f-npwp" name="npwpCount" required>
+                <option value="" selected disabled>Pilih</option>
+                <option value="1">1 NPWP</option>
+                <option value="2-5">2–5 NPWP</option>
+                <option value="6-25">6–25 NPWP</option>
+                <option value="26+">Lebih dari 25</option>
+              </select>
+              <p class="err" data-err="npwpCount"></p>
+            </div>
+            <div class="field">
+              <label for="f-vol">Faktur masukan per bulan</label>
+              <select id="f-vol" name="invoiceVolume" required>
+                <option value="" selected disabled>Pilih</option>
+                <option value="<100">Kurang dari 100</option>
+                <option value="100-300">100–300</option>
+                <option value="300-1000">300–1.000</option>
+                <option value="1000-5000">1.000–5.000</option>
+                <option value=">5000">Lebih dari 5.000</option>
+              </select>
+              <p class="err" data-err="invoiceVolume"></p>
+            </div>
+          </div>
+          <fieldset class="field">
+            <legend>Paket</legend>
+            <div class="seg" id="f-plan">
+              <label><input type="radio" name="plan" value="mandiri"><span>Mandiri</span></label>
+              <label><input type="radio" name="plan" value="bisnis" checked><span>Bisnis</span></label>
+              <label><input type="radio" name="plan" value="konsultan"><span>Konsultan</span></label>
+            </div>
+            <p class="err" data-err="plan"></p>
+          </fieldset>
+          <fieldset class="field">
+            <legend>Periode tagihan</legend>
+            <div class="seg" id="f-billing">
+              <label><input type="radio" name="billing" value="bulanan" checked><span>Bulanan</span></label>
+              <label><input type="radio" name="billing" value="tahunan"><span>Tahunan</span></label>
+            </div>
+            <p class="err" data-err="billing"></p>
+          </fieldset>
+          <div class="field">
+            <label for="f-source">Dari mana Anda tahu Kreditin? <span class="opt">opsional</span></label>
+            <input id="f-source" name="source" maxlength="200" placeholder="LinkedIn, grup WhatsApp, rekan kerja…">
+          </div>
+          <label class="consent">
+            <input type="checkbox" name="consent" id="f-consent">
+            <span>Saya setuju data ini disimpan dan dipakai Padu Data untuk menghubungi saya soal Kreditin, sesuai <a href="/privacy/">Kebijakan Privasi</a>.</span>
+          </label>
+          <p class="err" data-err="consent"></p>
+          <div class="cf-turnstile" data-sitekey="%VITE_TURNSTILE_SITEKEY%" data-language="id" data-size="flexible"></div>
+          <button class="btn btn-primary btn-lg" type="submit" id="f-submit">Daftar sekarang</button>
+          <p class="err form-err" id="form-err" role="alert"></p>
+        </form>
+
+        <div class="done-box" id="signup-done" hidden tabindex="-1">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="28" height="28" rx="8" fill="var(--accent)"/><path d="M9.5 16.5l4.2 4.2 8.8-9.4" fill="none" stroke="var(--on-accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>Terima kasih, Anda sudah terdaftar!</h3>
+          <p>Harga founding member Anda sudah kami catat. Aktivasi akun dilakukan bertahap, dan tim kami akan menghubungi Anda lewat WhatsApp di nomor <b id="done-wa"></b>.</p>
+          <p class="muted">Punya rekan yang juga mengurus faktur masukan? Bagikan halaman ini supaya mereka ikut dapat harga founding member.</p>
+          <button class="btn btn-ghost" type="button" id="share-btn">Salin link halaman</button>
+          <span class="copied" id="share-copied" aria-live="polite"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="faq">
+    <div class="wrap faq">
+      <div class="section-head">
+        <div class="eyebrow">FAQ</div>
+        <h2>Pertanyaan yang sering diajukan</h2>
+      </div>
+      <div class="qa">
+        <details>
+          <summary>Apakah Kreditin resmi dari DJP?</summary>
+          <p>Tidak. Kreditin adalah produk Padu Data dan tidak berafiliasi dengan Direktorat Jenderal Pajak. Kreditin bekerja di halaman Coretax yang Anda buka sendiri setelah login, mengerjakan langkah yang sama seperti yang Anda lakukan dengan mouse.</p>
+        </details>
+        <details>
+          <summary>Apakah data faktur saya dikirim ke server Kreditin?</summary>
+          <p>Tidak. File Excel dan data faktur diproses di browser Anda. Server kami hanya menerima informasi akun dan jumlah faktur yang diproses untuk menghitung kuota.</p>
+        </details>
+        <details>
+          <summary>Apakah Kreditin menyimpan password Coretax saya?</summary>
+          <p>Tidak. Anda login ke Coretax sendiri seperti biasa. Kreditin tidak pernah meminta password, kode otorisasi, atau sertifikat elektronik Anda.</p>
+        </details>
+        <details>
+          <summary>Browser apa yang didukung?</summary>
+          <p>Google Chrome dan Microsoft Edge versi terbaru, di Windows maupun macOS.</p>
+        </details>
+        <details>
+          <summary>Seperti apa format Excel-nya?</summary>
+          <p>Minimal dua kolom: nomor faktur dan masa pengkreditan tujuan. Kami menyediakan template, dan Anda juga bisa memetakan kolom dari file rekap Anda sendiri.</p>
+        </details>
+        <details>
+          <summary>Apa yang dihitung sebagai kuota faktur?</summary>
+          <p>Setiap faktur yang diproses Kreditin dalam satu bulan kalender. Faktur yang tidak ditemukan di Coretax tidak dihitung.</p>
+        </details>
+        <details>
+          <summary>Bagaimana kalau ada faktur yang gagal?</summary>
+          <p>Faktur tersebut ditandai "perlu dicek" di laporan beserta alasannya, misalnya masa pengkreditan sudah lewat batas atau faktur sedang dikunci. Anda bisa menjalankan ulang hanya faktur yang gagal.</p>
+        </details>
+        <details>
+          <summary>Apa yang terjadi setelah saya mendaftar?</summary>
+          <p>Pendaftaran gratis dan tidak mengikat. Aktivasi dilakukan bertahap, dan kami menghubungi Anda lewat WhatsApp untuk aktivasi akun. Tagihan pertama baru dikirim setelah akun Anda aktif.</p>
+        </details>
+        <details>
+          <summary>Bagaimana cara bayarnya?</summary>
+          <p>Transfer bank dalam rupiah, berdasarkan tagihan yang kami kirim setelah akun aktif. Paket tahunan dibayar di muka untuk 12 bulan dengan harga 10 bulan.</p>
+        </details>
+        <details>
+          <summary>Bisa ganti paket atau berhenti?</summary>
+          <p>Bisa kapan saja. Perubahan berlaku mulai periode tagihan berikutnya.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-brand">
+      <span>Kreditin adalah produk <a href="/">Padu Data</a>.</span>
+      <span>Tidak berafiliasi dengan Direktorat Jenderal Pajak. Coretax adalah sistem milik DJP.</span>
+    </div>
+    <nav aria-label="Footer">
+      <a href="/privacy/">Privasi</a>
+      <a href="/terms/">Ketentuan</a>
+      <span class="mono">hello@padudata.com</span>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>

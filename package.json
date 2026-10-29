@@ -17,8 +17,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && tsc -p worker && vite build",
     "test": "vitest run",
-    "deploy": "npm run build && wrangler deploy"
+    "deploy": "npm run build && wrangler deploy",
+    "dev:worker": "npm run build && wrangler d1 migrations apply padudata --local && wrangler dev",
+    "signups": "wrangler d1 execute padudata --remote --command \"SELECT created_at, name, email, whatsapp, role, npwp_count, invoice_volume, plan, billing, source, utm_source FROM signups WHERE product = 'kreditin' ORDER BY created_at DESC\""
   }
 }
